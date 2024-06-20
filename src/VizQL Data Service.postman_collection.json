@@ -244,6 +244,27 @@
 					"header": [],
 					"cookie": [],
 					"body": ""
+				},
+				{
+					"name": "disaggregate",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n   \"options\": {\n        \"debug\": {{options-debug}},\n        \"disaggregate\": true\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Category\",\n            \"sortPriority\": 1\n        },\n        {\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n   \"filters\": [\n        {\n            \"columnName\": \"City\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"Atlanta\" ],\n            \"exclude\": false\n        }\n   ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
 				}
 			]
 		},
