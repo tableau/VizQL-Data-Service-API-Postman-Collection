@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "b24a83c7-8fbf-43c8-a8c1-c4da83415abd",
+		"name": "VizQL Data Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20726226"
+	},
+	"item": [
+		{
+			"name": "query-datasource",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"connection\": {\n        \"tableauServerName\": \"{{tableau-server-name}}\",\n        \"siteId\": \"{{site-id}}\",\n        \"datasource\": \"{{datasource}}\"\n    },\n    \"query\": {\n        \"columns\": [],\n        \"filters\": []\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base-path}}/query-datasource"
+			},
+			"response": [
+				{
+					"name": "simple-query",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Category\"\n        },\n        {\n            \"columnName\": \"Sub-Category\"\n        },\n        {\n            \"columnName\": \"Profit\",\n            \"function\": \"AVG\"\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "custom-calc",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"AOV\",\n            \"calculation\": \"SUM([Profit])/COUNTD([Order ID])\"\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "set-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Ship Mode\"\n        },{\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"Ship Mode\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"First Class\", \"Standard Class\" ],\n            \"exclude\": false\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "quantitative-range-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Ship Mode\"\n        },{\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"column\": {\n                \"columnName\": \"Sales\",\n                \"function\": \"SUM\"\n            },\n            \"filterType\": \"QUANTITATIVE\",\n            \"quantitativeFilterType\": \"RANGE\",\n            \"min\": 266839,\n            \"max\": 1149562\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "quantitative-date-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Order Date\",\n            \"function\": \"DATE_YEAR\"\n        },\n        {\n            \"columnName\": \"Order Date\",\n            \"function\": \"DATE_QTR\"\n        },\n        {\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"Order Date\",\n            \"filterType\": \"QUANTITATIVE\",\n            \"quantitativeFilterType\": \"MIN\",\n            \"minDate\": {\n                \"day\": 1,\n                \"month\": 1,\n                \"year\": 2022\n            }\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "relative-date-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Order Date\"\n        },{\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"filterType\": \"DATE\",\n            \"columnName\": \"Order Date\",\n            \"units\": \"MONTHS\",\n            \"pastCount\": 1,\n            \"futureCount\": 0,\n            \"anchor\": {\n                \"day\": 1,\n                \"month\": 1,\n                \"year\": 2021\n            }\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "top-n-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"State/Province\"\n        },{\n            \"columnName\": \"Profit\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"State/Province\",\n            \"filterType\": \"TOP\",\n            \"howMany\": 10,\n            \"fieldToMeasure\": {\n                \"columnName\": \"Profit\",\n                \"function\": \"SUM\"\n            },\n            \"direction\": \"TOP\"\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "context-filter",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"OBJECTS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Sub-Category\"\n        },{\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"Sub-Category\",\n            \"filterType\": \"TOP\",\n            \"howMany\": 10,\n            \"fieldToMeasure\": {\n                \"columnName\": \"Sales\",\n                \"function\": \"SUM\"\n            },\n            \"direction\": \"TOP\"\n        },\n                {\n            \"columnName\": \"Category\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"Furniture\"],\n            \"exclude\": false,\n            \"context\": true\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "multiple-set-filters",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}},\n    \"returnFormat\": \"ARRAYS\"\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Ship Mode\"\n        },\n        {\n            \"columnName\": \"Segment\"\n        }, {\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"Ship Mode\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"First Class\", \"Standard Class\" ],\n            \"exclude\": false\n        }, {\n            \"columnName\": \"Segment\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"Consumer\" ],\n            \"exclude\": true\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "multiple-filters",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}}\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Category\",\n            \"sortPriority\": 1\n        },\n        {\n            \"columnName\": \"Sub-Category\",\n            \"sortPriority\": 2\n        },\n        {\n            \"columnName\": \"Sales\",\n            \"function\": \"AVG\"\n        }\n    ],\n    \"filters\": [\n        {\n            \"columnName\": \"Category\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"Office Supplies\" ],\n            \"exclude\": false\n        },\n        {\n            \"filterType\": \"DATE\",\n            \"columnName\": \"Order Date\",\n            \"units\": \"YEARS\",\n            \"pastCount\": 1,\n            \"futureCount\": 0,\n            \"anchor\": {\n                \"day\": 1,\n                \"month\": 1,\n                \"year\": 2021\n            }\n        },\n        {\n            \"column\": {\n                \"calculation\": \"SUM([Sales])\"\n            },\n            \"filterType\": \"QUANTITATIVE\",\n            \"quantitativeFilterType\": \"MIN\",\n            \"min\": 1000\n        },\n        {\n            \"columnName\": \"Ship Mode\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"First Class\" ],\n            \"exclude\": false\n        },\n        {\n            \"column\": {\n                \"columnName\": \"Profit\",\n                \"function\": \"SUM\"\n            },\n            \"filterType\": \"QUANTITATIVE\",\n            \"quantitativeFilterType\": \"MIN\",\n            \"min\": 700\n        }\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "disaggregate",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n   \"options\": {\n        \"debug\": {{options-debug}},\n        \"disaggregate\": true\n  },\n  \"query\": {\n    \"columns\": [\n        {\n            \"columnName\": \"Category\",\n            \"sortPriority\": 1\n        },\n        {\n            \"columnName\": \"Sales\",\n            \"function\": \"SUM\"\n        }\n    ],\n   \"filters\": [\n        {\n            \"columnName\": \"City\",\n            \"filterType\": \"SET\",\n            \"values\": [ \"Atlanta\" ],\n            \"exclude\": false\n        }\n   ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-path}}/query-datasource"
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "read-metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"connection\": {\n    \"tableauServerName\": \"{{tableau-server-name}}\",\n    \"siteId\": \"{{site-id}}\",\n    \"datasource\": \"{{datasource}}\"\n  },\n  \"options\": {\n    \"debug\": {{options-debug}}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base-path}}/read-metadata"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const uuid = require('uuid'); \r",
+					"\r",
+					"const username = pm.variables.get('tableau-username');\r",
+					"const clientId = pm.variables.get('connected-app-client-id');\r",
+					"const secretId = pm.variables.get('connected-app-secret-id');\r",
+					"const secretValue = pm.variables.get('connected-app-secret-value');\r",
+					"\r",
+					"if (username && clientId && secretId && secretValue) {\r",
+					"    setJwtHeader();\r",
+					"} else {\r",
+					"    setPatHeaders();\r",
+					"}\r",
+					"\r",
+					"cooerceBooleanOptions();\r",
+					"\r",
+					"function setJwtHeader() {\r",
+					"    const header = {\r",
+					"        typ: 'JWT',\r",
+					"        alg: 'HS256',\r",
+					"        kid: secretId,\r",
+					"        iss: clientId,\r",
+					"    };\r",
+					"\r",
+					"    const currentTimestamp = Math.floor(Date.now() / 1000);\r",
+					"\r",
+					"    const data = {\r",
+					"        jti: uuid.v4(),\r",
+					"        iss: clientId,\r",
+					"        aud: 'tableau',\r",
+					"        sub: username,\r",
+					"        scp: ['tableau:viz_data_service:read'],\r",
+					"        iat: currentTimestamp - 5,\r",
+					"        exp: currentTimestamp + 10 * 60,\r",
+					"    };\r",
+					"\r",
+					"    const stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));\r",
+					"    const encodedHeader = base64url(stringifiedHeader);\r",
+					"\r",
+					"    const stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));\r",
+					"    const encodedData = base64url(stringifiedData);\r",
+					"\r",
+					"    const token = `${encodedHeader}.${encodedData}`\r",
+					"\r",
+					"    let signature = CryptoJS.HmacSHA256(token, secretValue);\r",
+					"    signature = base64url(signature);\r",
+					"\r",
+					"    const signedToken = `${token}.${signature}`;\r",
+					"    setHeader('credential-jwt', signedToken);\r",
+					"}\r",
+					"\r",
+					"function setPatHeaders() {\r",
+					"    ['credential-key', 'credential-value'].forEach(key => {\r",
+					"        const value = pm.variables.get(key);\r",
+					"\r",
+					"        if (!value) {\r",
+					"            return;\r",
+					"        }\r",
+					"\r",
+					"        setHeader(key, value);\r",
+					"    })\r",
+					"}\r",
+					"\r",
+					"function cooerceBooleanOptions() {\r",
+					"    ['options-debug'].forEach(optionName => {\r",
+					"        pm.variables.set(optionName, !!pm.variables.get(optionName));\r",
+					"    })\r",
+					"}\r",
+					"\r",
+					"function setHeader(key, value) {\r",
+					"    pm.request.headers.add({ key, value });\r",
+					"    console.info(key, value);\r",
+					"}\r",
+					"\r",
+					"function base64url(source) {\r",
+					"    // Encode in classical base64\r",
+					"    encodedSource = CryptoJS.enc.Base64.stringify(source)\r",
+					"    \r",
+					"    // Remove padding equal characters\r",
+					"    encodedSource = encodedSource.replace(/=+$/, '')\r",
+					"    \r",
+					"    // Replace characters according to base64url specifications\r",
+					"    encodedSource = encodedSource.replace(/\\+/g, '-')\r",
+					"    encodedSource = encodedSource.replace(/\\//g, '_')\r",
+					"    \r",
+					"    return encodedSource\r",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
